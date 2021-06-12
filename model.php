@@ -20,7 +20,7 @@ function readProduct($id)
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     return $result;
-    echo $result;
+    #echo $result;
 }
 
 function createProduct($pname,$stock,$level,$leadtime,$material_name,$material_qty)
@@ -44,10 +44,20 @@ function updateProduct($pname,$stock,$level,$leadtime,$material_name,$material_q
 function deleteProduct($id)
 {
     global $db;
-    $sql =  "DELETE FROM product where id=?"; 
+    $sql =  "DELETE FROM product where id = ?"; 
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, "i",$id);
     mysqli_stmt_execute($stmt);
 }
 
+function getProductID($pname){
+    global $db;
+    $sql =  "SELECT id FROM product where pname = ?"; 
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "s",$pname);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result;
+    #echo $result['id'];
+}
 ?>

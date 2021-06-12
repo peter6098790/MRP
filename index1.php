@@ -38,8 +38,11 @@
                     <img src="../newBG/image/logo2.png" width="140" height="50"/>
                 </div> -->
                 <div class="bt">
-                    <a id="button" href="enroll.html" >註冊</a>
-                    <a id="button" href="test.php">新增BOM</a>
+                    <input name="button" type="button" onClick="addField()" value="新增欄位"> 
+                    <input name="button" type="submit"  value="確認"> 
+					<input type="button" value="新增BOM表零件" onclick="location.href='insertView.php'"> 
+                    <!-- <a id="button" href="enroll.html" >註冊</a>
+                    <a id="button" href="test.php">新增BOM</a> -->
                 </div>
             </form>
         </table>
