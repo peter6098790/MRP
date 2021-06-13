@@ -35,6 +35,7 @@ for($i = 1; $i <= $index_counter ; $i = $i+1) {
 class product
 {
     public $level=-1;
+    //sub product class array;
     public $materialList = [];
     public $name = '';
     public $number =[];
@@ -73,17 +74,17 @@ class product
     foreach($tmpArr as $value){
         $Arr =[];
         #$tes = ${''.$value} -> materialStringArr[0];
-        #echo 'Class: '.$value.'<br/>';
+        echo '<br/>Class: '.$value.'<br/>';
         $materialStringArr = ${''.$value} -> materialStringArr ;
         foreach($materialStringArr as $value2){
-            #echo '子零件:'.$value2."<br/>";
+            echo '子零件:'.$value2."<br/>";
             $tmpClass = ${''.$value2};
             array_push($Arr,$tmpClass);
         }
         //檢查
-        // foreach ($Arr as $arr) {
-        //     echo '子零件屬性: ' . $arr->level . ' ' . $arr->name . "\n";
-        // }
+        foreach ($Arr as $arr) {
+            echo '子零件屬性: ' . $arr->level . ' ' . $arr->name . "\n";
+        }
         ${''.$value} -> materialList = $Arr;
         #echo '<br/>';
     }
@@ -117,7 +118,19 @@ class product
         }
         
     }
-    #echo $X -> materialStringArr[0];
+    function countDemand($product,$demand){
+        if (isset($product -> materialList)){
+            if ($demand > $product -> stock){
+
+            }
+            foreach($product -> materialList as $data){
+                counternumber($data,$product -> stock);
+            }
+        }else{
+
+        }
+    }
+
     $Alllist =[];
     array_push($Alllist,${''.$target});
     foreach ($Alllist as $data){
@@ -125,18 +138,45 @@ class product
         echo $data -> name." : <br/>";
         addlevel($data,$level);
     }
-echo $X -> level
+// echo "X, level:";
+// echo $X -> level;
+// echo "<br/>";
+// echo "B, level:";
+// echo $B -> level;
+// echo "<br/>";
+// echo "C, level:";
+// echo $C -> level;
+// echo "<br/>";
+// echo "D, level:";
+// echo $D -> level;
+// echo "<br/>";
+// echo "E, level:";
+// echo $E -> level;
+// echo "<br/>";
+// echo "F, level:";
+// echo $F -> level;
+// echo "<br/>";
+echo "testP, level:";
+echo $testP -> level;
 echo "<br/>";
-echo $B -> level
+echo "testA, level:";
+echo $testA -> level;
 echo "<br/>";
-echo $C -> level
+echo "testC, level:";
+echo $testC -> level;
 echo "<br/>";
-echo $D -> level
+echo "testD, level:";
+echo $testD -> level;
 echo "<br/>";
-echo $E -> level
+echo "testN, level:";
+echo $testN -> level;
 echo "<br/>";
-echo $F -> level
+echo "testM, level:";
+echo $testM -> level;
 echo "<br/>";
+echo isset($E->materialList);
+echo "<br/>";
+echo isset($X->materialList);
 #$nodeArr = array_unique($nodeArr);
 // foreach ($nodeArr as $value){
 //   #${''.$value} = $value;
