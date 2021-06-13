@@ -25,21 +25,21 @@ function readProduct($id)
     #echo $result;
 }
 //新增零件至資料庫
-function createProduct($pname,$stock,$level,$leadtime,$material_name,$material_qty)
+function createProduct($pname,$stock,$leadtime,$material_name,$material_qty) #,$level
 {
     global $db;
-    $sql =  "INSERT INTO product (pname,stock,plevel,leadtime,material_name,material_qty) VALUES (?,?,?,?,?,?)"; 
+    $sql =  "INSERT INTO product (pname,stock,leadtime,material_name,material_qty) VALUES (?,?,?,?,?)"; 
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "siiiss", $pname,$stock,$level,$leadtime,$material_name,$material_qty);
+    mysqli_stmt_bind_param($stmt, "siiss", $pname,$stock,$leadtime,$material_name,$material_qty); #,$level
     mysqli_stmt_execute($stmt);
 }
 //更新現有零件
-function updateProduct($pname,$stock,$level,$leadtime,$material_name,$material_qty,$id)
+function updateProduct($pname,$stock,$leadtime,$material_name,$material_qty,$id) #,$level
 {
     global $db;
-    $sql =  "UPDATE product SET pname = ? ,stock = ? ,plevel = ? ,leadtime = ? ,material_name = ? ,material_qty = ? where id = ?"; 
+    $sql =  "UPDATE product SET pname = ? ,stock = ?  ,leadtime = ? ,material_name = ? ,material_qty = ? where id = ?"; 
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "siiissi", $pname,$stock,$level,$leadtime,$material_name,$material_qty,$id);
+    mysqli_stmt_bind_param($stmt, "siissi", $pname,$stock,$leadtime,$material_name,$material_qty,$id);
     mysqli_stmt_execute($stmt);
 }
 function updateProductStock($pname,$stock)
