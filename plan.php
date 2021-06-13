@@ -137,6 +137,7 @@ class product
             } 
         }
     }
+
     foreach ($_POST as $value) {
         $counter = $counter + 1;
     }
@@ -151,8 +152,10 @@ class product
         $index_week =  'a'.(string)$i;
         $index_demand =  'b'.(string)$i;
         echo '周次: '.$_POST[$index_week].'需求: '.$_POST[$index_demand].'<br/>';
-    }
 
+    }
+    
+    #function calculateOneOrder()
     $Alllist =[];
     array_push($Alllist,${''.$target});
     foreach ($Alllist as $data){

@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL || ~E_NOTICE);
 require_once("dbconfig.php");
 
 function readAllData() 
@@ -39,6 +40,14 @@ function updateProduct($pname,$stock,$level,$leadtime,$material_name,$material_q
     $sql =  "UPDATE product SET pname = ? ,stock = ? ,plevel = ? ,leadtime = ? ,material_name = ? ,material_qty = ? where id = ?"; 
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, "siiissi", $pname,$stock,$level,$leadtime,$material_name,$material_qty,$id);
+    mysqli_stmt_execute($stmt);
+}
+function updateProductStock($pname,$stock)
+{
+    global $db;
+    $sql =  "UPDATE product SET stock = ? where pname = ?"; 
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "is", $stock,$pname);
     mysqli_stmt_execute($stmt);
 }
 
