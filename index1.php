@@ -37,9 +37,10 @@
                 <div class="logo2">
                     <img src="../newBG/image/logo2.png" width="140" height="50"/>
                 </div> -->
-                <div class="bt">
-                    <input name="button" type="button" onClick="addField()" value="新增欄位"> 
-                    <input name="button" type="submit"  value="確認"> 
+                <div class="bt" style="text-align:center;">
+                    <!-- <input name="button" type="button" onClick="addField()" value="新增欄位">  -->
+                    <input type="button" value="庫存列表" onclick="location.href='stockView.php'"> 
+                    <input type="button" value="設定需求與規劃" onclick="location.href='setDemand.php'"> 
 					<input type="button" value="新增BOM表零件" onclick="location.href='insertView.php'"> 
                     <!-- <a id="button" href="enroll.html" >註冊</a>
                     <a id="button" href="test.php">新增BOM</a> -->

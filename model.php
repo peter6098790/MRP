@@ -11,6 +11,7 @@ function readAllData()
     $result = mysqli_stmt_get_result($stmt);
     return $result;
 }
+
 function readProduct($id)
 {
     global $db;
@@ -22,7 +23,7 @@ function readProduct($id)
     return $result;
     #echo $result;
 }
-
+//新增零件至資料庫
 function createProduct($pname,$stock,$level,$leadtime,$material_name,$material_qty)
 {
     global $db;
@@ -31,6 +32,7 @@ function createProduct($pname,$stock,$level,$leadtime,$material_name,$material_q
     mysqli_stmt_bind_param($stmt, "siiiss", $pname,$stock,$level,$leadtime,$material_name,$material_qty);
     mysqli_stmt_execute($stmt);
 }
+//更新現有零件
 function updateProduct($pname,$stock,$level,$leadtime,$material_name,$material_qty,$id)
 {
     global $db;
@@ -40,7 +42,6 @@ function updateProduct($pname,$stock,$level,$leadtime,$material_name,$material_q
     mysqli_stmt_execute($stmt);
 }
 
-
 function deleteProduct($id)
 {
     global $db;
@@ -49,7 +50,7 @@ function deleteProduct($id)
     mysqli_stmt_bind_param($stmt, "i",$id);
     mysqli_stmt_execute($stmt);
 }
-
+//用零件名稱找資料庫id
 function getProductID($pname){
     global $db;
     $sql =  "SELECT id FROM product where pname = ?"; 
@@ -59,5 +60,63 @@ function getProductID($pname){
     $result = mysqli_stmt_get_result($stmt);
     return $result;
     #echo $result['id'];
+}
+function readAllProduct()
+{
+    global $db;
+    $sql = "SELECT pname,stock,material_name,material_qty FROM `product` where 1" ;
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result;
+}
+//顯示庫存列表
+function showAllProduct(){
+    $result=readAllProduct();
+    while($rs = mysqli_fetch_assoc($result)){
+        echo"<tr><td colspan='4'><hr></td></tr> ";
+        echo"<tr><td>";
+        echo $rs['pname'];
+        echo"</td><td>";
+        echo $rs['stock'];
+        echo"</td><td>";
+        echo $rs['material_name'];
+        echo"</td><td>";
+        echo $rs['material_qty'];
+        echo"</td></tr>";
+    }
+}
+//取得子零件和數量
+function getSubProduct($pname)
+{
+    global $db;
+    $sql = "SELECT material_name FROM `product` where pname = ?" ;
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $pname);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result;
+}
+function getleadtime($pname)
+{
+    global $db;
+    $sql = "SELECT leadtime FROM `product` where pname = ?" ;
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $pname);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result;
+}
+function calculate($target){ #,$week,$demand
+    $result=getleadtime($target);
+    while($rs = mysqli_fetch_assoc($result)){
+        $leadtime = $rs['leadtime'];
+    }
+    //周次-leadtime $week-$leadtime;
+    //demand *
+    //while arr !null 
+
+//刪除unset($
 }
 ?>

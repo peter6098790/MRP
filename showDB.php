@@ -9,22 +9,26 @@
     #deleteProduct(9);
     #createProduct('test145',15,3,5,null,null)
     #updateProduct('test1456',15,3,5,null,null,13)
-    $result = readAllData();
-    // while($rs =mysqli_fetch_assoc($result)){
-    //     $name=$rs['pname'];
-    //     echo $name;
-    //     echo "<br/>";
-    // }
-    if ($result -> num_rows == 0){
-        echo '目前無資料';
-    }else{
-        while($rs =mysqli_fetch_assoc($result)){
-            $name=$rs['pname'];
-            $stock=$rs['stock'];
-            echo $name.'剩餘庫存: '.$stock;
-            echo "<br/>";
-        }
+    #$result = readAllData();
+    $result = getSubProduct('E');
+
+    while($rs =mysqli_fetch_assoc($result)){
+        $material_name=$rs['material_name'];
+        echo $material_name;
+        echo "<br/>";
     }
+
+    // if ($result -> num_rows == 0){
+    //     echo '目前無資料';
+    // }else{
+    //     while($rs =mysqli_fetch_assoc($result)){
+    //         $name=$rs['pname'];
+    //         $stock=$rs['stock'];
+    //         echo $name.'剩餘庫存: '.$stock;
+    //         echo "<br/>";
+    //     }
+    // }
+
     // var_dump($result);
     // if($nums > 0){
     //     while($row=mysql_fetch_array($result)){
