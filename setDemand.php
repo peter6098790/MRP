@@ -56,7 +56,7 @@
                 <p> 
                     <input name="button" type="button" onClick="addField()" value="新增欄位" align="center"> 
                     <input name="button" type="submit"  value="確認" align="center"> 
-                    <input type="button" value="回主選單" onclick="location.href='index1.php'"> 
+                    <input type="button" value="回主選單" onclick="location.href='index.php'"> 
 	            </p>  
 	        </form>  
 	 

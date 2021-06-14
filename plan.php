@@ -1,5 +1,5 @@
 <?php 
-#error_reporting(E_ALL || ~E_NOTICE);
+error_reporting(E_ALL || ~E_NOTICE);
 require('dbconfig.php');
 require('setDemand.php');
 require('model.php');
@@ -18,7 +18,7 @@ for($i = 1; $i <= $index_counter ; $i = $i+1) {
     $index_week =  'a'.(string)$i;
     $index_demand =  'b'.(string)$i;
     echo '周次: '.$_POST[$index_week].'需求: '.$_POST[$index_demand].'<br/>';
-    calculateOneOrder($target,$_POST[$index_demand]);
+    calculateOneOrder($target,$_POST[$index_demand],$_POST[$index_week]);
 }
 
 
@@ -77,6 +77,7 @@ function countDemandandLeadtime($product,$demand,$data){ #product: 產品class, 
             $product -> stock = $product -> stock - $demand;
             updateProductStock($product -> name,$product -> stock);
             $product -> demand = 0;
+            $product -> maketime = 0;
         }
     //零件
     }else{
@@ -86,30 +87,33 @@ function countDemandandLeadtime($product,$demand,$data){ #product: 產品class, 
             updateProductStock($product -> name,0);
             $product -> $demand = $product -> $demand + $truedemand;
             $leadtime = $leadtime + $product -> leadtime; #$product ->leadtime該產品的製作時間
+            $product -> maketime = 0;
         }else{
             $product -> $stock = $product -> stock - $demand;
             updateProductStock($product -> name,$product -> stock);
             $product -> demand = 0;
+            $product -> maketime = 0;
         }
     }
     return $leadtime;
 }
     //檢查能不能延後訂貨
 function smartstorge($product,$totaltime,$level){
-    if ($product -> materialList != null){ #isset($product -> materialList)
-        foreach($product -> materialList as $next){
-            smartstorge($next,$product -> maketime,$product -> level);
+        if ($product -> materialList != null){ #isset($product -> materialList)
+            foreach($product -> materialList as $next){
+                smartstorge($next,$product -> maketime,$product -> level);
+            }
+        }else{
+            if($product -> level == $level+1){
+                if($product -> demand != 0){
+                    $product -> maketime = $totaltime - $product -> leadtime;
+                }
+            }
         }
-    }else{
-        if($product -> level == $level+1){
-            $product -> maketime = $totaltime - $product -> leadtime;
-            
-        } 
-    }
 }
     #$order_demand = $_POST[$index_demand];
     #calculateOneOrder($target,$order_demand);
-function calculateOneOrder($target,$order_demand){
+function calculateOneOrder($target,$order_demand,$deadline){
     $tmpArr = [];
     $result = readAllData();
     $counter = -1;
@@ -180,21 +184,31 @@ function calculateOneOrder($target,$order_demand){
         }
     }
     
-    foreach($bom_list as $show){
-        $index = ${''.$show};
-        echo ${''.$show} -> name.'level:'.${''.$show} -> level.", demand:".${''.$show} -> demand." maketime: ".(string)($totaltime - ${''.$show} -> maketime)."<br/>";
-    }
+    // foreach($bom_list as $show){
+    //     $index = ${''.$show};
+    //     echo ${''.$show} -> name.'level:'.${''.$show} -> level.", demand:".${''.$show} -> demand." maketime: ".(string)(${''.$show} -> maketime)."<br/>";#$totaltime - 
+    // }
     //訂貨優化
     echo 'smartstorge:<br/>';
     smartstorge($targetObject,0,0);
+    $day=time()+(24*60*60*$deadline); //24小時x60分x60秒x7天    
+    echo '今天日期是: '.date('Y-m-d').'<br>';
+    echo '交貨日期是: '.date('Y-m-d',$day).'<br>'; 
     foreach($bom_list as $show){
         $index = ${''.$show};
-        echo ${''.$show} -> name.'level:'.${''.$show} -> level.", demand:".${''.$show} -> demand." maketime: ".(string)($totaltime - ${''.$show} -> maketime)."<br/>";
+        $day=time()+(24*60*60*($deadline-$totaltime+${''.$show} -> maketime));
+        #echo ${''.$show} -> name.'level:'.${''.$show} -> level.", demand:".${''.$show} -> demand." maketime: ".date('Y-m-d',$day)."<br/>";#$totaltime - 
+        if (${''.$show} -> materialList != null){
+            echo '在'.date('Y-m-d',$day).' 生產level:'.$index -> level."的元件 ".$index -> name.' '.$index -> demand."個<br/>";
+            createOrder(date('Y-m-d',$day),$index -> level,$index -> name,$index -> demand,'make');
+        }else{
+            echo '在'.date('Y-m-d',$day).' 訂購level:'.$index -> level."的元件 ".$index -> name.' '.$index -> demand."個<br/>";
+            createOrder(date('Y-m-d',$day),$index -> level,$index -> name,$index -> demand,'order');
+        }
     }
-    echo '下一輪: <br/>';
 }
-    
-
+echo '下一輪: <br/>';
+#(string)(${''.$show} -> leadtime)
     
     
     

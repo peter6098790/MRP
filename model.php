@@ -24,6 +24,25 @@ function readProduct($id)
     return $result;
     #echo $result;
 }
+function readOrder()
+{
+    global $db;
+    $sql = "SELECT * FROM `order_table` where 1 Order BY date ASC" ;
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result;
+}
+//新增規劃至資料庫
+function createOrder($date,$level,$product,$qty,$om) #$order_id,
+{
+    global $db;
+    $sql =  "INSERT INTO order_table (date,level,product,qty,om) VALUES (?,?,?,?,?)"; 
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "sisis", $date,$level,$product,$qty,$om); #,$level
+    mysqli_stmt_execute($stmt);
+}
+
 //新增零件至資料庫
 function createProduct($pname,$stock,$leadtime,$material_name,$material_qty) #,$level
 {
@@ -82,7 +101,7 @@ function readAllProduct()
 }
 //顯示庫存列表
 function showAllProduct(){
-    $result=readAllProduct();
+    $result= readAllProduct();
     while($rs = mysqli_fetch_assoc($result)){
         echo"<tr><td colspan='4'><hr></td></tr> ";
         echo"<tr><td>";
@@ -93,6 +112,22 @@ function showAllProduct(){
         echo $rs['material_name'];
         echo"</td><td>";
         echo $rs['material_qty'];
+        echo"</td></tr>";
+    }
+}
+//顯示規劃列表
+function showAllOrder(){
+    $result=readOrder();
+    while($rs = mysqli_fetch_assoc($result)){
+        echo"<tr><td colspan='4'><hr></td></tr> ";
+        echo"<tr><td>";
+        echo $rs['date'];
+        echo"</td><td>";
+        echo $rs['product'];
+        echo"</td><td>";
+        echo $rs['qty'];
+        echo"</td><td>";
+        echo $rs['om'];
         echo"</td></tr>";
     }
 }

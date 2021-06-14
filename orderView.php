@@ -1,7 +1,11 @@
 <html>
 <head>
-<title>庫存列表</title>
+<title>規劃列表</title>
 </head>
+<!-- <body>
+    <select id="shopList">
+    	<option></option>
+    </select>   -->
 <body>
         <table id="main" align="center">
             <!-- <form id="team" method="post" action="teamUpdate.php" accept-charset="utf-8"> -->
@@ -11,20 +15,20 @@
             </tr>
             <td colspan="4" id="background">
                 <!-- <img src="newBG/image/rank.png" width="100"/></br> -->
-            <font size="6">庫存列表</font></td>
+            <font size="6">規劃列表</font></td>
             <tr>
                 <td colspan="4"> ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                 </td>
             </tr>
             <tr>
-                <td width="120px">零件名稱</td>
-                <td width="120px">目前庫存</td>
-                <td width="120px">子零件</td>
-                <td width="120px">子零件需求數量</td>
+                <td width="120px">日期</td>
+                <td width="120px">零件</td>
+                <td width="120px">數量</td>
+                <td width="120px">狀態</td>
             </tr>
             <?php 
                 require("model.php");
-                showAllProduct();
+                showAllOrder();
             ?>
             <tr>
                 <td colspan="4"> ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀

@@ -81,7 +81,7 @@
                 <p> 
 	                <input name="button" type="button" onClick="addField()" value="新增欄位"> 
                     <input name="button" type="submit"  value="確認"> 
-					<input type="button" value="回主選單" onclick="location.href='index1.php'"> 
+					<input type="button" value="回主選單" onclick="location.href='index.php'"> 
 					<!-- <a id="button" href="index1.php">回主選單</a> -->
 					<!-- <input name="button" type="button"  value="新增欄位">  -->
 	            </p>  
