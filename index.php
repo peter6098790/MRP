@@ -21,6 +21,10 @@
         th ,td {
             background-color:#37322f00;
         }
+        div {
+            width: 600px;
+            height: 300px;
+        }
         </style>
         <script type="text/javascript">
         </script>
@@ -42,9 +46,7 @@
                     <input type="button" value="庫存列表" onclick="location.href='stockView.php'"> 
                     <input type="button" value="規劃列表" onclick="location.href='orderView.php'"> 
                     <input type="button" value="設定需求與規劃" onclick="location.href='setDemand.php'"> 
-					<input type="button" value="新增BOM表零件" onclick="location.href='insertView.php'"> 
-                    <!-- <a id="button" href="enroll.html" >註冊</a>
-                    <a id="button" href="test.php">新增BOM</a> -->
+					<input type="button" value="輸入零件" onclick="location.href='insertView.php'"> 
                 </div>
             </form>
         </table>

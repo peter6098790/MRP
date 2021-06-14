@@ -6,6 +6,7 @@
 	            body {font: 13px Arial} 
 	            #table1 td {text-align: center; font: 13px Arial; color: #FFFF00; height: 20px} 
 	            #table1 select {font-size: 13px; width: 40px} 
+				/* #table1{margin-left:auto; margin-right:auto;} */
 	            .red {color: red; font: bold 13px Arial} 
 	        </style> 
 	         
@@ -25,8 +26,8 @@
                     var td2 = tr.insertCell(-1); 
 	                //將名稱欄位的class設為aclass , 
 	                //給一唯一id 
-	                td.innerHTML = "<input type=text id=a" + idcount + " name=a" + idcount + ">";    
-                    td2.innerHTML = "<input type=text id=b" + idcount + " name=b" + idcount + ">";
+	                td.innerHTML = "<input type=text placeholder=幾天後交貨 id=a " + idcount + " name=a" + idcount + ">";    
+                    td2.innerHTML = "<input type=text placeholder=需求數量 id=b " + idcount + " name=b" + idcount + ">";
 	                //若有其他欄位，方式相同 
 	                document.getElementById("a"+idcount).focus(); 
                     document.getElementById("b"+idcount).focus();
@@ -39,21 +40,25 @@
 	    </head> 
 	    <body>
 	        <form action = './plan.php' method = 'post'>
-				<input name="target" type="text"  id='target' align="center" placeholder='生產產品'> 
+			<!-- Align="Center" -->
+				<p> 
+					<input name="target" type="text"  id='target' align="center" placeholder='生產產品'> 
+				</p>
 	            <table width="267" border="1" bordercolor="#CCCCCC" id="table1"> 
 	                <tr> 
-                        <td bgcolor="#7F9DB9" width="201">周次</td> 
+                        <td bgcolor="#7F9DB9" width="201">天數</td> 
                         <td bgcolor="#7F9DB9" width="201">需求</td> 
 	                </tr> 
 	                <tr id="tr1">      
                         <td width="201"> 
-                            <input type="text" id="a1" name="a1" placeholder='幾周後交貨'>       
+                            <input type="text" id="a1" name="a1" placeholder='幾天後交貨'>       
 	                    <td width="201">                     
 	                        <input type="text" id="b1" name="b1" placeholder='需求數量'>
 	                  </td> 
 	                </tr> 
 	            </table>  
-                <p> 
+				<!-- Align="Center" -->
+                <p>
                     <input name="button" type="button" onClick="addField()" value="新增欄位" align="center"> 
                     <input name="button" type="submit"  value="確認" align="center"> 
                     <input type="button" value="回主選單" onclick="location.href='index.php'"> 

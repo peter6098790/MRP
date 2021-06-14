@@ -12,7 +12,7 @@ $counter = 0;
 foreach ($_POST as $value) {
   $counter = $counter + 1;
 }
-#print($counter.'<br>');
+print($counter.'<br>');
 $index_counter = $counter/5;
 //Get the POST data from insertView
 for($i = 1; $i <= $index_counter ; $i = $i+1) {
@@ -27,23 +27,13 @@ for($i = 1; $i <= $index_counter ; $i = $i+1) {
     $result = getProductID($_POST[$index_name]);
     if ($result -> num_rows == 0){
         #$_POST[$index_level],
-        echo '1';
         createProduct($_POST[$index_name],$_POST[$index_stock],$_POST[$index_leadtime],$_POST[$index_material_name],$_POST[$index_material__qty]);
     }else{
         while($rs =mysqli_fetch_assoc($result)){
             $id = $rs['id'];
         }
-        echo '2';
         #$_POST[$index_level],
         updateProduct($_POST[$index_name],$_POST[$index_stock],$_POST[$index_leadtime],$_POST[$index_material_name],$_POST[$index_material__qty],$id);
     }
 }
-
-#$nodeArr = array_unique($nodeArr);
-// foreach ($nodeArr as $value){
-//   #${''.$value} = $value;
-//   ${''.$value} = new TreeNode($value);
-// }
-// #print_r($nodeArr);
-
 ?>
