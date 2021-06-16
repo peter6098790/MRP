@@ -1,9 +1,10 @@
 <?php 
 error_reporting(E_ALL || ~E_NOTICE);
+
 require('dbconfig.php');
 require('setDemand.php');
 require('model.php');
-
+$startTime = microtime(TRUE);
 $counter = -1;
 foreach ($_POST as $value) {
     $counter = $counter + 1;
@@ -19,7 +20,8 @@ for($i = 1; $i <= $index_counter ; $i = $i+1) {
     echo '需求: '.$_POST[$index_demand].'<br/>';
     calculateOneOrder($target,$_POST[$index_demand],$_POST[$index_week]);
 }
-
+$endTime = microtime(TRUE);
+echo $endTime - $startTime.'秒';
 
 class product
 {
@@ -58,7 +60,7 @@ function countDemandandLeadtime($product,$demand,$data){ #product: 產品class, 
     $leadtime = 0;
     $tmpleadtime = [];
     //半成品or成品
-    echo $product -> name.' '.$demand;
+    #echo $product -> name.' '.$demand;
     if (isset($product -> materialList)){ #$product -> materialList != null
         #echo $product ->name."有";
         if ($demand > $product -> stock){ #需求扣掉庫存得到真正需求量
@@ -104,6 +106,11 @@ function countDemandandLeadtime($product,$demand,$data){ #product: 產品class, 
 function smartstorge($product,$totaltime,$level){
         if ($product -> materialList != null){ #isset($product -> materialList)
             foreach($product -> materialList as $next){
+                if($product -> level == $level+1){
+                    if($product -> demand != 0){
+                        $product -> maketime = $totaltime - $product -> leadtime;
+                    }
+                }
                 smartstorge($next,$product -> maketime,$product -> level);
             }
         }else{
@@ -158,7 +165,7 @@ function calculateOneOrder($target,$order_demand,$deadline){
     $targetObject = ${''.$target};
     addlevel($targetObject,0);
     $totaltime = countDemandandLeadtime($targetObject,1,$order_demand);# 第三個參數 需求總數
-    #echo "Total leadtime : ".(string)($totaltime).'<br/>';
+    echo "Total leadtime : ".(string)($totaltime).'<br/>';
     #echo "<br/>";
     //以物件level屬性區分出bom表成員(有計算到level);
     $bom_list = [];
